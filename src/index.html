@@ -13,17 +13,33 @@
     <link rel="shortcut icon" href="./4geeks.ico" />
   </head>
   <body>
-    <div class="container-fluid text-center">
-      <h1 class="mt-5">Hello Rigo!</h1>
-      <img src="./rigo-baby.jpg" />
-      <p class="alert alert-warning mt-4">
-        If this text is <b>not</b> centered and <b>yellow</b>, you probably have
-        an error
-      </p>
-      <div class="fixed-bottom p-4">
-        Made with ❤️ by
-        <a href="https://www.4geeksacademy.com">4Geeks Academy</a>
+    <div class="container-fluid">
+      <div class="input-group">
+        <label for="variables">Original</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Recipient's username"
+          aria-label="Recipient's username with two button addons"
+          aria-describedby="button-addon4"
+          id="variable"
+          value=""
+        />
+        <div class="input-group-append" id="button-addon4">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="buttonDraw"
+          >
+            Draw
+          </button>
+          <button class="btn btn-outline-secondary" type="button">
+            Bubble
+          </button>
+        </div>
       </div>
+      <div id="cardsContainer"></div>
     </div>
+    <div class="container-fluid"></div>
   </body>
 </html>
