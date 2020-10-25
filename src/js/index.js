@@ -12,25 +12,25 @@ let mySortingArray = [];
 
 myDrawBotton.addEventListener("click", myInputReciver);
 
-console.log(myDrawBotton);
-
 function myInputReciver() {
+  // ----Función para recibir el input del usuario.
   let myTextInputValue = document.querySelector("#variable");
   let inputValue = myTextInputValue.value;
   console.log(inputValue);
   cardsRandomaizer(inputValue);
-  //   cardsGenerator(inputValue);
   return inputValue;
 }
 
 let randomIndex = array => {
+  // ----función para seleccionar aleatoriamente un valor del array elegido.
   let radomNumber = Math.floor(Math.random() * array.length);
   return array[radomNumber];
 };
+
 let numberSwitcher = () => {
+  // ----Esta función sirve para cambiar los valores numericos 1, 11,12 y 13 por sus equivalentes alfabeticos A, J, Q y K.
   let numberRandomIndex = randomIndex(number);
   mySortingArray.push(numberRandomIndex);
-
   if (numberRandomIndex == 1) {
     numberRandomIndex = "A";
   } else if (numberRandomIndex == 11) {
@@ -42,7 +42,9 @@ let numberSwitcher = () => {
   }
   return numberRandomIndex;
 };
-function cardsGenerator(inputValue) {
+
+function cardsGenerator() {
+  // función para generar cartas de cero
   let suitsRandomIndex = randomIndex(suits);
 
   let cardContainer = document.createElement("div");
@@ -74,20 +76,22 @@ function cardsGenerator(inputValue) {
 
   let cardBottomContent = document.createTextNode(suitsRandomIndex);
   if (suitsRandomIndex == "\u2665" || suitsRandomIndex == "\u2666") {
+    // condición utilizada para cambiar el color del palo a rojo en caso de que sea diamante o corazón.
     cardDivBottom.classList.add("text-danger");
   }
   cardDivBottom.appendChild(cardBottomContent);
   cardContainer.appendChild(cardDivBottom);
-
   return cardContainer;
 }
+
 function cardsRandomaizer(inputValue) {
+  // ---función para generar cartas en funcion del input introducido.
   let myCardsContainer = document.querySelector("#cardsContainer");
-  myCardsContainer.innerHTML = "";
+  myCardsContainer.innerHTML = ""; // elimina el contenido actual del div que contiene las cartas.
   for (let index = 0; index < inputValue; index++) {
     myCardsContainer.appendChild(cardsGenerator());
   }
   console.log(mySortingArray);
-  // ---pasar sort aquí
-  mySortingArray = [];
+  // ---pasar sort aquí.
+  mySortingArray = []; // elimina el contenido actual del array con los valores de las cartas.
 }
