@@ -7,7 +7,7 @@ import "../style/index.scss";
 
 let myDrawBotton = document.querySelector("#buttonDraw");
 const suits = ["\u2666", "\u2665", "\u2660", "\u2663"];
-const number = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
+const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 let mySortingArray = [];
 
 myDrawBotton.addEventListener("click", myInputReciver);
@@ -27,12 +27,22 @@ let randomIndex = array => {
   let radomNumber = Math.floor(Math.random() * array.length);
   return array[radomNumber];
 };
-
-function cardsGenerator(inputValue) {
+let numberSwitcher = () => {
   let numberRandomIndex = randomIndex(number);
-
   mySortingArray.push(numberRandomIndex);
 
+  if (numberRandomIndex == 1) {
+    numberRandomIndex = "A";
+  } else if (numberRandomIndex == 11) {
+    numberRandomIndex = "J";
+  } else if (numberRandomIndex == 12) {
+    numberRandomIndex = "Q";
+  } else if (numberRandomIndex == 13) {
+    numberRandomIndex = "K";
+  }
+  return numberRandomIndex;
+};
+function cardsGenerator(inputValue) {
   let suitsRandomIndex = randomIndex(suits);
 
   let cardContainer = document.createElement("div");
@@ -58,7 +68,7 @@ function cardsGenerator(inputValue) {
   cardDivMid.appendChild(cardMidContent);
   cardContainer.appendChild(cardDivMid);
 
-  let cardTopContent = document.createTextNode(numberRandomIndex);
+  let cardTopContent = document.createTextNode(numberSwitcher());
   cardDivTop.appendChild(cardTopContent);
   cardContainer.appendChild(cardDivTop);
 
