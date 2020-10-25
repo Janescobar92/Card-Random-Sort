@@ -6,11 +6,13 @@ import "../assets/img/4geeks.ico";
 import "../style/index.scss";
 
 let myDrawBotton = document.querySelector("#buttonDraw");
+let myBubbleSortButton = document.querySelector("#bubbleSortbutton");
 const suits = ["\u2666", "\u2665", "\u2660", "\u2663"];
 const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 let mySortingArray = [];
 
 myDrawBotton.addEventListener("click", myInputReciver);
+myBubbleSortButton.addEventListener("click", bubbleSort);
 
 function myInputReciver() {
   // ----Función para recibir el input del usuario.
@@ -93,5 +95,25 @@ function cardsRandomaizer(inputValue) {
   }
   console.log(mySortingArray);
   // ---pasar sort aquí.
+  bubbleSort(mySortingArray);
   mySortingArray = []; // elimina el contenido actual del array con los valores de las cartas.
 }
+
+const bubbleSort = arr => {
+  let wall = arr.length - 1; //we start the wall at the end of the array
+  while (wall > 0) {
+    let index = 0;
+    while (index < wall) {
+      //compare the adjacent positions, if the right one is bigger, we have to swap
+      if (arr[index] > arr[index + 1]) {
+        let aux = arr[index];
+        arr[index] = arr[index + 1];
+        arr[index + 1] = aux;
+      }
+      index++;
+    }
+    wall--; //decrease the wall for optimization
+  }
+  console.log(arr);
+  return arr;
+};
