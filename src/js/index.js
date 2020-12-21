@@ -9,7 +9,8 @@ let myDrawBotton = document.querySelector("#buttonDraw");
 let myBubbleSortButton = document.querySelector("#bubbleSortbutton");
 const suits = ["\u2666", "\u2665", "\u2660", "\u2663"];
 const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-let mySortingArray = [];
+let myNumbersArray = [];
+let mySuitsArray = [];
 
 myDrawBotton.addEventListener("click", myInputReciver);
 myBubbleSortButton.addEventListener("click", bubbleSort);
@@ -18,7 +19,6 @@ function myInputReciver() {
   // ----Función para recibir el input del usuario.
   let myTextInputValue = document.querySelector("#variable");
   let inputValue = myTextInputValue.value;
-  console.log(inputValue);
   cardsRandomaizer(inputValue);
   return inputValue;
 }
@@ -32,7 +32,8 @@ let randomIndex = array => {
 let numberSwitcher = () => {
   // ----Esta función sirve para cambiar los valores numericos 1, 11,12 y 13 por sus equivalentes alfabeticos A, J, Q y K.
   let numberRandomIndex = randomIndex(number);
-  mySortingArray.push(numberRandomIndex);
+  myNumbersArray.push(numberRandomIndex);
+
   if (numberRandomIndex == 1) {
     numberRandomIndex = "A";
   } else if (numberRandomIndex == 11) {
@@ -45,10 +46,13 @@ let numberSwitcher = () => {
   return numberRandomIndex;
 };
 
-function cardsGenerator() {
-  // función para generar cartas de cero
+let suitsRandom = () => {
   let suitsRandomIndex = randomIndex(suits);
+  mySuitsArray.push(suitsRandomIndex);
+  return suitsRandomIndex;
+};
 
+function cardsGenerator() {
   let cardContainer = document.createElement("div");
   cardContainer.classList.add("card");
 
@@ -65,8 +69,10 @@ function cardsGenerator() {
   cardDivBottom.classList.add("justify-content-start");
   cardDivBottom.classList.add("rotate");
 
-  let cardMidContent = document.createTextNode(suitsRandomIndex);
-  if (suitsRandomIndex == "\u2665" || suitsRandomIndex == "\u2666") {
+  let suits = suitsRandom();
+  let cardMidContent = document.createTextNode(suits);
+
+  if (suits == "\u2665" || suits == "\u2666") {
     cardDivMid.classList.add("text-danger");
   }
   cardDivMid.appendChild(cardMidContent);
@@ -76,15 +82,17 @@ function cardsGenerator() {
   cardDivTop.appendChild(cardTopContent);
   cardContainer.appendChild(cardDivTop);
 
-  let cardBottomContent = document.createTextNode(suitsRandomIndex);
-  if (suitsRandomIndex == "\u2665" || suitsRandomIndex == "\u2666") {
+  let cardBottomContent = document.createTextNode(suits);
+  if (suits == "\u2665" || suits == "\u2666") {
     // condición utilizada para cambiar el color del palo a rojo en caso de que sea diamante o corazón.
     cardDivBottom.classList.add("text-danger");
   }
   cardDivBottom.appendChild(cardBottomContent);
   cardContainer.appendChild(cardDivBottom);
+
   return cardContainer;
 }
+function bubblecardGenerator() {}
 
 function cardsRandomaizer(inputValue) {
   // ---función para generar cartas en funcion del input introducido.
@@ -93,16 +101,20 @@ function cardsRandomaizer(inputValue) {
   for (let index = 0; index < inputValue; index++) {
     myCardsContainer.appendChild(cardsGenerator());
   }
-  console.log(mySortingArray);
+  //   console.log(myNumbersArray);
+  console.log(mySuitsArray);
   // ---pasar sort aquí.
-  bubbleSort(mySortingArray);
-  mySortingArray = []; // elimina el contenido actual del array con los valores de las cartas.
+  bubbleSort(myNumbersArray);
+  myNumbersArray = []; // elimina el contenido actual del array con los valores de las cartas.
+  mySuitsArray = [];
 }
 
 const bubbleSort = arr => {
   let wall = arr.length - 1; //we start the wall at the end of the array
   while (wall > 0) {
     let index = 0;
+    console.log(arr);
+    bubblecardGenerator();
     while (index < wall) {
       //compare the adjacent positions, if the right one is bigger, we have to swap
       if (arr[index] > arr[index + 1]) {
