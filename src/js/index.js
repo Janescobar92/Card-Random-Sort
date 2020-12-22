@@ -105,7 +105,7 @@ function cardsGenerator() {
   return cardContainer;
 }
 
-function sortCardGenerator(arr) {
+function sortCardGenerator(arr, num) {
   let sortCardContainer = document.createElement("div");
   sortCardContainer.classList.add("d-flex");
   arr.forEach(element => {
@@ -147,6 +147,11 @@ function sortCardGenerator(arr) {
     sortCard.appendChild(cardDivBottom);
     sortCardContainer.appendChild(sortCard);
   });
+  let mySortingCardsTitleText = document.createTextNode("BUBBLE STEP " + num);
+  let mySortingCardsTitle = document.createElement("p");
+  mySortingCardsTitle.classList.add("text-light");
+  mySortingCardsTitle.appendChild(mySortingCardsTitleText);
+  mySortingCardsContainer.appendChild(mySortingCardsTitle);
   mySortingCardsContainer.appendChild(sortCardContainer);
 }
 
@@ -167,9 +172,11 @@ function cardsRandomaizer(inputValue) {
 
 const bubbleSort = arr => {
   let wall = arr.length - 1; //we start the wall at the end of the array
+  let step = 0;
   while (wall > 0) {
     let index = 0;
-    sortCardGenerator(arr);
+    step++;
+    sortCardGenerator(arr, step);
     console.log(arr);
     while (index < wall) {
       //compare the adjacent positions, if the right one is bigger, we have to swap
