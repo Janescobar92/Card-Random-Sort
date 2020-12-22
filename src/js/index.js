@@ -11,6 +11,8 @@ const suits = ["\u2666", "\u2665", "\u2660", "\u2663"];
 const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 let myNumbersArray = [];
 let mySuitsArray = [];
+let myCardsContainer = document.querySelector("#cardsContainer");
+let mySortingCardsContainer = document.querySelector("#sortCardsContainer");
 
 myDrawBotton.addEventListener("click", myInputReciver);
 myBubbleSortButton.addEventListener("click", bubbleSort);
@@ -29,20 +31,9 @@ let randomIndex = array => {
   return array[radomNumber];
 };
 
-let numberSwitcher = () => {
-  // ----Esta función sirve para cambiar los valores numericos 1, 11,12 y 13 por sus equivalentes alfabeticos A, J, Q y K.
+let randomNumber = () => {
   let numberRandomIndex = randomIndex(number);
   myNumbersArray.push(numberRandomIndex);
-
-  if (numberRandomIndex == 1) {
-    numberRandomIndex = "A";
-  } else if (numberRandomIndex == 11) {
-    numberRandomIndex = "J";
-  } else if (numberRandomIndex == 12) {
-    numberRandomIndex = "Q";
-  } else if (numberRandomIndex == 13) {
-    numberRandomIndex = "K";
-  }
   return numberRandomIndex;
 };
 
@@ -50,6 +41,19 @@ let suitsRandom = () => {
   let suitsRandomIndex = randomIndex(suits);
   mySuitsArray.push(suitsRandomIndex);
   return suitsRandomIndex;
+};
+let numberSwitcher = number => {
+  // ----Esta función sirve para cambiar los valores numericos 1, 11,12 y 13 por sus equivalentes alfabeticos A, J, Q y K.
+  if (number == 1) {
+    number = "A";
+  } else if (number == 11) {
+    number = "J";
+  } else if (number == 12) {
+    number = "Q";
+  } else if (number == 13) {
+    number = "K";
+  }
+  return number;
 };
 
 function cardsGenerator() {
@@ -78,7 +82,7 @@ function cardsGenerator() {
   cardDivMid.appendChild(cardMidContent);
   cardContainer.appendChild(cardDivMid);
 
-  let cardTopContent = document.createTextNode(numberSwitcher());
+  let cardTopContent = document.createTextNode(numberSwitcher(randomNumber()));
   cardDivTop.appendChild(cardTopContent);
   cardContainer.appendChild(cardDivTop);
 
@@ -92,11 +96,52 @@ function cardsGenerator() {
 
   return cardContainer;
 }
-function bubblecardGenerator() {}
+
+function sortCardGenerator() {
+  mySuitsArray.forEach((element, index) => {
+    const elemt2 = myNumbersArray[index];
+    let sortCardsContainer = document.createElement("div");
+    sortCardsContainer.classList.add("card");
+
+    let cardDivMid = document.createElement("div");
+    cardDivMid.classList.add("d-flex");
+    cardDivMid.classList.add("justify-content-start");
+
+    let cardDivTop = document.createElement("div");
+    cardDivTop.classList.add("d-flex");
+    cardDivTop.classList.add("justify-content-center");
+
+    let cardDivBottom = document.createElement("div");
+    cardDivBottom.classList.add("d-flex");
+    cardDivBottom.classList.add("justify-content-start");
+    cardDivBottom.classList.add("rotate");
+
+    let suits = element;
+    let cardMidContent = document.createTextNode(suits);
+
+    if (suits == "\u2665" || suits == "\u2666") {
+      cardDivMid.classList.add("text-danger");
+    }
+    cardDivMid.appendChild(cardMidContent);
+    sortCardsContainer.appendChild(cardDivMid);
+
+    let cardTopContent = document.createTextNode(elemt2);
+    cardDivTop.appendChild(cardTopContent);
+    sortCardsContainer.appendChild(cardDivTop);
+
+    let cardBottomContent = document.createTextNode(suits);
+    if (suits == "\u2665" || suits == "\u2666") {
+      cardDivBottom.classList.add("text-danger");
+    }
+    cardDivBottom.appendChild(cardBottomContent);
+    sortCardsContainer.appendChild(cardDivBottom);
+    console.log("hola", sortCardsContainer);
+    mySortingCardsContainer.appendChild(sortCardsContainer);
+  });
+}
 
 function cardsRandomaizer(inputValue) {
   // ---función para generar cartas en funcion del input introducido.
-  let myCardsContainer = document.querySelector("#cardsContainer");
   myCardsContainer.innerHTML = ""; // elimina el contenido actual del div que contiene las cartas.
   for (let index = 0; index < inputValue; index++) {
     myCardsContainer.appendChild(cardsGenerator());
@@ -114,7 +159,7 @@ const bubbleSort = arr => {
   while (wall > 0) {
     let index = 0;
     console.log(arr);
-    bubblecardGenerator();
+    sortCardGenerator();
     while (index < wall) {
       //compare the adjacent positions, if the right one is bigger, we have to swap
       if (arr[index] > arr[index + 1]) {
