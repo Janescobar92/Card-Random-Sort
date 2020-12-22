@@ -7,6 +7,7 @@ import "../style/index.scss";
 
 let myDrawBotton = document.querySelector("#buttonDraw");
 let myBubbleSortButton = document.querySelector("#bubbleSortbutton");
+let mySelectSortButton = document.querySelector("#selectSortbutton");
 const suits = ["\u2666", "\u2665", "\u2660", "\u2663"];
 const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 let myCardsContainer = document.querySelector("#cardsContainer");
@@ -15,8 +16,18 @@ let myNumbersArray = [];
 let mySuitsArray = [];
 let myCardValues = [];
 
+const BubSortCall = () => {
+  bubbleSort(myCardValues);
+  //   myCardValues = [];
+};
+const SelSortCall = () => {
+  selectSort(myCardValues);
+  //   myCardValues = [];
+};
+
 myDrawBotton.addEventListener("click", myInputReciver);
-myBubbleSortButton.addEventListener("click", bubbleSort);
+myBubbleSortButton.addEventListener("click", BubSortCall);
+mySelectSortButton.addEventListener("click", SelSortCall);
 
 function myInputReciver() {
   // ----Función para recibir el input del usuario.
@@ -60,7 +71,7 @@ let numberSwitcher = number => {
 function cardsGenerator() {
   let cardValue = [];
   let cardNumber = randomNumber();
-  myNumbersArray.push(cardNumber);
+  //   myNumbersArray.push(cardNumber);
   cardValue.push(cardNumber);
   let suits = suitsRandom();
   cardValue.push(suits);
@@ -105,11 +116,10 @@ function cardsGenerator() {
   return cardContainer;
 }
 
-function sortCardGenerator(arr, num) {
+function sortCardGenerator(arr, num, title) {
   let sortCardContainer = document.createElement("div");
   sortCardContainer.classList.add("d-flex");
   arr.forEach(element => {
-    console.log(element, "THIS IS THE ELEMENT");
     let sortCard = document.createElement("div");
     sortCard.classList.add("card");
 
@@ -147,7 +157,7 @@ function sortCardGenerator(arr, num) {
     sortCard.appendChild(cardDivBottom);
     sortCardContainer.appendChild(sortCard);
   });
-  let mySortingCardsTitleText = document.createTextNode("BUBBLE STEP " + num);
+  let mySortingCardsTitleText = document.createTextNode(title + num);
   let mySortingCardsTitle = document.createElement("p");
   mySortingCardsTitle.classList.add("text-light");
   mySortingCardsTitle.appendChild(mySortingCardsTitleText);
@@ -162,10 +172,11 @@ function cardsRandomaizer(inputValue) {
     myCardsContainer.appendChild(cardsGenerator());
   }
   //   console.log(myNumbersArray);
-  console.log(mySuitsArray);
+  //   console.log(mySuitsArray);
   // ---pasar sort aquí.
-  bubbleSort(myCardValues);
-  //   bubbleSort(myNumbersArray);
+  //   selectSort(myNumbersArray);
+  //   selectSort(myCardValues);
+  //   console.log("HEEEEELO", myCardValues);
   myNumbersArray = []; // elimina el contenido actual del array con los valores de las cartas.
   mySuitsArray = [];
 }
@@ -176,13 +187,10 @@ const bubbleSort = arr => {
   while (wall > 0) {
     let index = 0;
     step++;
-    sortCardGenerator(arr, step);
-    console.log(arr);
+    sortCardGenerator(arr, step, "BUBBLE STEP ");
     while (index < wall) {
-      //compare the adjacent positions, if the right one is bigger, we have to swap
       if (arr[index][0] > arr[index + 1][0]) {
         let aux = arr[index];
-        console.log(aux[0], "THIS IS AUUX VALUE");
         arr[index] = arr[index + 1];
         arr[index + 1] = aux;
       }
@@ -190,6 +198,23 @@ const bubbleSort = arr => {
     }
     wall--; //decrease the wall for optimization
   }
-  //   console.log(arr);
+  return arr;
+};
+
+const selectSort = arr => {
+  let min = 0;
+  while (min < arr.length) {
+    let step = min + 1;
+    sortCardGenerator(arr, step, "SELECT STEP ");
+    // console.log(arr);
+    for (let i = min + 1; i < arr.length; i++) {
+      if (arr[min][0] > arr[i][0]) {
+        let aux = arr[min];
+        arr[min] = arr[i];
+        arr[i] = aux;
+      }
+    }
+    min++;
+  }
   return arr;
 };
