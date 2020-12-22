@@ -158,6 +158,7 @@ const bubbleSort = arr => {
     let index = 0;
     step++;
     sortCardGenerator(arr, step, "BUBBLE STEP ");
+    console.log(arr);
     while (index < wall) {
       if (arr[index][0] > arr[index + 1][0]) {
         let aux = arr[index];
