@@ -125,7 +125,7 @@ function sortCardGenerator() {
     cardDivMid.appendChild(cardMidContent);
     sortCardsContainer.appendChild(cardDivMid);
 
-    let cardTopContent = document.createTextNode(elemt2);
+    let cardTopContent = document.createTextNode(numberSwitcher(elemt2));
     cardDivTop.appendChild(cardTopContent);
     sortCardsContainer.appendChild(cardDivTop);
 
@@ -135,7 +135,6 @@ function sortCardGenerator() {
     }
     cardDivBottom.appendChild(cardBottomContent);
     sortCardsContainer.appendChild(cardDivBottom);
-    console.log("hola", sortCardsContainer);
     mySortingCardsContainer.appendChild(sortCardsContainer);
   });
 }
