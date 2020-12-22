@@ -9,10 +9,11 @@ let myDrawBotton = document.querySelector("#buttonDraw");
 let myBubbleSortButton = document.querySelector("#bubbleSortbutton");
 const suits = ["\u2666", "\u2665", "\u2660", "\u2663"];
 const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-let myNumbersArray = [];
-let mySuitsArray = [];
 let myCardsContainer = document.querySelector("#cardsContainer");
 let mySortingCardsContainer = document.querySelector("#sortCardsContainer");
+let myNumbersArray = [];
+let mySuitsArray = [];
+let myCardValues = [];
 
 myDrawBotton.addEventListener("click", myInputReciver);
 myBubbleSortButton.addEventListener("click", bubbleSort);
@@ -57,6 +58,14 @@ let numberSwitcher = number => {
 };
 
 function cardsGenerator() {
+  let cardValue = [];
+  let cardNumber = randomNumber();
+  myNumbersArray.push(cardNumber);
+  cardValue.push(cardNumber);
+  let suits = suitsRandom();
+  cardValue.push(suits);
+  myCardValues.push(cardValue);
+
   let cardContainer = document.createElement("div");
   cardContainer.classList.add("card");
 
@@ -73,7 +82,6 @@ function cardsGenerator() {
   cardDivBottom.classList.add("justify-content-start");
   cardDivBottom.classList.add("rotate");
 
-  let suits = suitsRandom();
   let cardMidContent = document.createTextNode(suits);
 
   if (suits == "\u2665" || suits == "\u2666") {
@@ -82,7 +90,7 @@ function cardsGenerator() {
   cardDivMid.appendChild(cardMidContent);
   cardContainer.appendChild(cardDivMid);
 
-  let cardTopContent = document.createTextNode(numberSwitcher(randomNumber()));
+  let cardTopContent = document.createTextNode(numberSwitcher(cardNumber));
   cardDivTop.appendChild(cardTopContent);
   cardContainer.appendChild(cardDivTop);
 
@@ -97,12 +105,11 @@ function cardsGenerator() {
   return cardContainer;
 }
 
-function sortCardGenerator() {
+function sortCardGenerator(arr) {
   let sortCardContainer = document.createElement("div");
   sortCardContainer.classList.add("d-flex");
-  myNumbersArray.forEach((element, index) => {
-    const element2 = mySuitsArray[index];
-
+  arr.forEach(element => {
+    console.log(element, "THIS IS THE ELEMENT");
     let sortCard = document.createElement("div");
     sortCard.classList.add("card");
 
@@ -119,7 +126,7 @@ function sortCardGenerator() {
     cardDivBottom.classList.add("justify-content-start");
     cardDivBottom.classList.add("rotate");
 
-    let suits = element2;
+    let suits = element[1];
     let cardMidContent = document.createTextNode(suits);
 
     if (suits == "\u2665" || suits == "\u2666") {
@@ -128,7 +135,7 @@ function sortCardGenerator() {
     cardDivMid.appendChild(cardMidContent);
     sortCard.appendChild(cardDivMid);
 
-    let cardTopContent = document.createTextNode(numberSwitcher(element));
+    let cardTopContent = document.createTextNode(numberSwitcher(element[0]));
     cardDivTop.appendChild(cardTopContent);
     sortCard.appendChild(cardDivTop);
 
@@ -152,7 +159,8 @@ function cardsRandomaizer(inputValue) {
   //   console.log(myNumbersArray);
   console.log(mySuitsArray);
   // ---pasar sort aquí.
-  bubbleSort(myNumbersArray);
+  bubbleSort(myCardValues);
+  //   bubbleSort(myNumbersArray);
   myNumbersArray = []; // elimina el contenido actual del array con los valores de las cartas.
   mySuitsArray = [];
 }
@@ -161,12 +169,13 @@ const bubbleSort = arr => {
   let wall = arr.length - 1; //we start the wall at the end of the array
   while (wall > 0) {
     let index = 0;
+    sortCardGenerator(arr);
     console.log(arr);
-    sortCardGenerator();
     while (index < wall) {
       //compare the adjacent positions, if the right one is bigger, we have to swap
-      if (arr[index] > arr[index + 1]) {
+      if (arr[index][0] > arr[index + 1][0]) {
         let aux = arr[index];
+        console.log(aux[0], "THIS IS AUUX VALUE");
         arr[index] = arr[index + 1];
         arr[index + 1] = aux;
       }
@@ -174,6 +183,6 @@ const bubbleSort = arr => {
     }
     wall--; //decrease the wall for optimization
   }
-  console.log(arr);
+  //   console.log(arr);
   return arr;
 };
