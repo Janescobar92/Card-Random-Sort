@@ -98,10 +98,13 @@ function cardsGenerator() {
 }
 
 function sortCardGenerator() {
-  mySuitsArray.forEach((element, index) => {
-    const elemt2 = myNumbersArray[index];
-    let sortCardsContainer = document.createElement("div");
-    sortCardsContainer.classList.add("card");
+  let sortCardContainer = document.createElement("div");
+  sortCardContainer.classList.add("d-flex");
+  myNumbersArray.forEach((element, index) => {
+    const element2 = mySuitsArray[index];
+
+    let sortCard = document.createElement("div");
+    sortCard.classList.add("card");
 
     let cardDivMid = document.createElement("div");
     cardDivMid.classList.add("d-flex");
@@ -116,27 +119,28 @@ function sortCardGenerator() {
     cardDivBottom.classList.add("justify-content-start");
     cardDivBottom.classList.add("rotate");
 
-    let suits = element;
+    let suits = element2;
     let cardMidContent = document.createTextNode(suits);
 
     if (suits == "\u2665" || suits == "\u2666") {
       cardDivMid.classList.add("text-danger");
     }
     cardDivMid.appendChild(cardMidContent);
-    sortCardsContainer.appendChild(cardDivMid);
+    sortCard.appendChild(cardDivMid);
 
-    let cardTopContent = document.createTextNode(numberSwitcher(elemt2));
+    let cardTopContent = document.createTextNode(numberSwitcher(element));
     cardDivTop.appendChild(cardTopContent);
-    sortCardsContainer.appendChild(cardDivTop);
+    sortCard.appendChild(cardDivTop);
 
     let cardBottomContent = document.createTextNode(suits);
     if (suits == "\u2665" || suits == "\u2666") {
       cardDivBottom.classList.add("text-danger");
     }
     cardDivBottom.appendChild(cardBottomContent);
-    sortCardsContainer.appendChild(cardDivBottom);
-    mySortingCardsContainer.appendChild(sortCardsContainer);
+    sortCard.appendChild(cardDivBottom);
+    sortCardContainer.appendChild(sortCard);
   });
+  mySortingCardsContainer.appendChild(sortCardContainer);
 }
 
 function cardsRandomaizer(inputValue) {
