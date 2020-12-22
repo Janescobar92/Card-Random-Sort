@@ -1,8 +1,5 @@
-/* eslint-disable */
-
 import "../assets/img/rigo-baby.jpg";
 import "../assets/img/4geeks.ico";
-//import 'breathecode-dom'; //DOM override to make JS easier to use
 import "../style/index.scss";
 
 let myDrawBotton = document.querySelector("#buttonDraw");
@@ -12,17 +9,15 @@ const suits = ["\u2666", "\u2665", "\u2660", "\u2663"];
 const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 let myCardsContainer = document.querySelector("#cardsContainer");
 let mySortingCardsContainer = document.querySelector("#sortCardsContainer");
-let myNumbersArray = [];
-let mySuitsArray = [];
 let myCardValues = [];
 
 const BubSortCall = () => {
   bubbleSort(myCardValues);
-  //   myCardValues = [];
+  myCardValues = [];
 };
 const SelSortCall = () => {
   selectSort(myCardValues);
-  //   myCardValues = [];
+  myCardValues = [];
 };
 
 myDrawBotton.addEventListener("click", myInputReciver);
@@ -45,13 +40,11 @@ let randomIndex = array => {
 
 let randomNumber = () => {
   let numberRandomIndex = randomIndex(number);
-  myNumbersArray.push(numberRandomIndex);
   return numberRandomIndex;
 };
 
 let suitsRandom = () => {
   let suitsRandomIndex = randomIndex(suits);
-  mySuitsArray.push(suitsRandomIndex);
   return suitsRandomIndex;
 };
 let numberSwitcher = number => {
@@ -71,40 +64,31 @@ let numberSwitcher = number => {
 function cardsGenerator() {
   let cardValue = [];
   let cardNumber = randomNumber();
-  //   myNumbersArray.push(cardNumber);
   cardValue.push(cardNumber);
   let suits = suitsRandom();
   cardValue.push(suits);
   myCardValues.push(cardValue);
-
   let cardContainer = document.createElement("div");
   cardContainer.classList.add("card");
-
   let cardDivMid = document.createElement("div");
   cardDivMid.classList.add("d-flex");
   cardDivMid.classList.add("justify-content-start");
-
   let cardDivTop = document.createElement("div");
   cardDivTop.classList.add("d-flex");
   cardDivTop.classList.add("justify-content-center");
-
   let cardDivBottom = document.createElement("div");
   cardDivBottom.classList.add("d-flex");
   cardDivBottom.classList.add("justify-content-start");
   cardDivBottom.classList.add("rotate");
-
   let cardMidContent = document.createTextNode(suits);
-
   if (suits == "\u2665" || suits == "\u2666") {
     cardDivMid.classList.add("text-danger");
   }
   cardDivMid.appendChild(cardMidContent);
   cardContainer.appendChild(cardDivMid);
-
   let cardTopContent = document.createTextNode(numberSwitcher(cardNumber));
   cardDivTop.appendChild(cardTopContent);
   cardContainer.appendChild(cardDivTop);
-
   let cardBottomContent = document.createTextNode(suits);
   if (suits == "\u2665" || suits == "\u2666") {
     // condición utilizada para cambiar el color del palo a rojo en caso de que sea diamante o corazón.
@@ -112,7 +96,7 @@ function cardsGenerator() {
   }
   cardDivBottom.appendChild(cardBottomContent);
   cardContainer.appendChild(cardDivBottom);
-
+  mySortingCardsContainer.innerHTML = "";
   return cardContainer;
 }
 
@@ -122,33 +106,26 @@ function sortCardGenerator(arr, num, title) {
   arr.forEach(element => {
     let sortCard = document.createElement("div");
     sortCard.classList.add("card");
-
     let cardDivMid = document.createElement("div");
     cardDivMid.classList.add("d-flex");
     cardDivMid.classList.add("justify-content-start");
-
     let cardDivTop = document.createElement("div");
     cardDivTop.classList.add("d-flex");
     cardDivTop.classList.add("justify-content-center");
-
     let cardDivBottom = document.createElement("div");
     cardDivBottom.classList.add("d-flex");
     cardDivBottom.classList.add("justify-content-start");
     cardDivBottom.classList.add("rotate");
-
     let suits = element[1];
     let cardMidContent = document.createTextNode(suits);
-
     if (suits == "\u2665" || suits == "\u2666") {
       cardDivMid.classList.add("text-danger");
     }
     cardDivMid.appendChild(cardMidContent);
     sortCard.appendChild(cardDivMid);
-
     let cardTopContent = document.createTextNode(numberSwitcher(element[0]));
     cardDivTop.appendChild(cardTopContent);
     sortCard.appendChild(cardDivTop);
-
     let cardBottomContent = document.createTextNode(suits);
     if (suits == "\u2665" || suits == "\u2666") {
       cardDivBottom.classList.add("text-danger");
@@ -171,14 +148,7 @@ function cardsRandomaizer(inputValue) {
   for (let index = 0; index < inputValue; index++) {
     myCardsContainer.appendChild(cardsGenerator());
   }
-  //   console.log(myNumbersArray);
-  //   console.log(mySuitsArray);
-  // ---pasar sort aquí.
-  //   selectSort(myNumbersArray);
-  //   selectSort(myCardValues);
-  //   console.log("HEEEEELO", myCardValues);
-  myNumbersArray = []; // elimina el contenido actual del array con los valores de las cartas.
-  mySuitsArray = [];
+  // ---pasar sort aquí para pruebas.
 }
 
 const bubbleSort = arr => {
@@ -206,7 +176,6 @@ const selectSort = arr => {
   while (min < arr.length) {
     let step = min + 1;
     sortCardGenerator(arr, step, "SELECT STEP ");
-    // console.log(arr);
     for (let i = min + 1; i < arr.length; i++) {
       if (arr[min][0] > arr[i][0]) {
         let aux = arr[min];
